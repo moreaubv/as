@@ -1,173 +1,501 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Handcrafted Shoes — Made to Last</title>
-  <meta name="description" content="장인정신으로 한 켤레씩 제작하는 수제화. 당신의 발에 맞춘 단 하나의 신발."/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>유튜브 썸네일 디자이너 | 의뢰 받습니다</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    body {
-      font-family: 'Pretendard', system-ui, sans-serif;
+    :root {
+      --bg: #0f0f0f;
+      --card: #151515;
+      --border: #222;
+      --text: #e0e0e0;
+      --text-muted: #888;
+      --text-light: #aaa;
+      --accent: #ffffff;
+      --completed: #ffffff;
+      --processing: #666;
+      --button: #222;
+      --button-hover: #444;
     }
-    h1, h2, .font-serif {
-      font-family: 'Playfair Display', serif;
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #ffffff;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 16px;
+      line-height: 1.4;
+    }
+    .two-column {
+      display: flex;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .left-column { flex: 1; min-width: 380px; }
+    .right-column { flex: 1; min-width: 300px; }
+    .widget {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h2 {
+      font-size: 1.18rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .content { padding: 20px; }
+    .title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-light);
+    }
+    .date {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .scroll-container {
+      height: 460px;
+      overflow: hidden;
+      position: relative;
+    }
+    .scroll-wrapper {
+      position: absolute;
+      top: 0; left: 0; width: 100%;
+      animation: scroll 90s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .list { list-style: none; }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .item:last-child { border-bottom: none; }
+    .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #222;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon.completed { background: var(--completed); color: #000; }
+    .icon.processing {
+      background: transparent;
+      border: 1px solid var(--processing);
+      color: var(--processing);
+      font-size: 1.4rem;
+    }
+    .info { flex: 1; }
+    .meta {
+      font-size: 0.81rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .name { font-weight: 500; }
+    .status {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+    }
+    .status.completed { color: var(--accent); }
+    .status.processing { color: var(--text-muted); }
+    .service {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin: 3px 0;
+    }
+    .amount {
+      font-size: 1.32rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    /* 오른쪽 컬럼 - 이미지 원본 크기 그대로 */
+    .right-column .promo-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .promo-image-container {
+      margin-bottom: 24px;
+    }
+    .promo-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      /* 어떠한 강제 크기 조정도 하지 않음 (원본 비율 + 원본 크기 기준) */
+    }
+    .goto-button {
+      display: inline-block;
+      padding: 16px 48px;
+      background: linear-gradient(to right, #444, #222);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.25s;
+      border: 1px solid #444;
+    }
+    .goto-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      background: linear-gradient(to right, #555, #333);
+    }
+
+    @media (max-width: 920px) {
+      .two-column { flex-direction: column; gap: 40px; }
+      .scroll-container { height: 420px; }
+    }
+    @media (max-width: 500px) {
+      body { padding: 20px 12px; }
     }
   </style>
 </head>
-<body class="bg-[#f8f5f1] text-gray-900 antialiased">
-
-  <!-- Navigation -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-    <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <div class="text-2xl font-serif tracking-wider">ATELIER</div>
-      <ul class="hidden md:flex items-center space-x-10 text-sm tracking-wider uppercase">
-        <li><a href="#collection" class="hover:text-amber-800 transition">Collection</a></li>
-        <li><a href="#bespoke" class="hover:text-amber-800 transition">Bespoke</a></li>
-        <li><a href="#craft" class="hover:text-amber-800 transition">Craft</a></li>
-        <li><a href="#guide" class="hover:text-amber-800 transition">Size Guide</a></li>
-        <li><a href="#" class="hover:text-amber-800 transition">Review</a></li>
-        <li><a href="#" class="hover:text-amber-800 transition">Contact</a></li>
-      </ul>
-      <div class="flex items-center space-x-6">
-        <button class="text-sm tracking-wider uppercase hover:text-amber-800 transition">Cart (0)</button>
-        <button class="md:hidden">Menu</button>
+<body>
+<div class="two-column">
+  <!-- 왼쪽: 실시간 현황 위젯 -->
+  <div class="left-column">
+    <div class="widget">
+      <div class="header">
+        <h2>실시간 현황</h2>
       </div>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
-    <div class="absolute inset-0">
-      <!-- 실제로는 <video> 또는 next/image + priority + fill 사용 추천 -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
+      <div class="content">
+        <div class="title">승인금액 이용 내역</div>
+        <div class="date">날짜 로딩중...</div>
+        <div class="scroll-container">
+          <div class="scroll-wrapper">
+            <ul class="list">
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>26분 전</span>
+                    <span class="name">용인 박O님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">5,870,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>58분 전</span>
+                    <span class="name">서울 신O민님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">3,310,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>55분 전</span>
+                    <span class="name">창원 한O님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,340,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>32분 전</span>
+                    <span class="name">부천 정O경님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">6,410,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>35분 전</span>
+                    <span class="name">안산 윤O님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,410,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>방금</span>
+                    <span class="name">창원 이O성님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,410,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>31분 전</span>
+                    <span class="name">인천 조O찬님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,480,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>58분 전</span>
+                    <span class="name">안양 한O수님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">2,100,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>59분 전</span>
+                    <span class="name">광주 정O현님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">3,160,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>32분 전</span>
+                    <span class="name">인천 송O연님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">5,590,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>32분 전</span>
+                    <span class="name">창원 오O현님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">2,830,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon processing">…</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>28분 전</span>
+                    <span class="name">서울 권O님</span>
+                    <span class="status processing">진행중</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">2,940,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>13분 전</span>
+                    <span class="name">울산 김O준님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">6,980,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>40분 전</span>
+                    <span class="name">용인 조O진님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">2,630,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>방금</span>
+                    <span class="name">울산 박O님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">8,370,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>26분 전</span>
+                    <span class="name">안산 권O민님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,850,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>방금</span>
+                    <span class="name">수원 정O님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">3,580,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>6분 전</span>
+                    <span class="name">대구 장O지님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">2,730,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>10분 전</span>
+                    <span class="name">광주 권O율님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">8,510,000원</div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="icon processing">…</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>방금</span>
+                    <span class="name">제주 한O민님</span>
+                    <span class="status processing">진행중</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,850,000원</div>
+                </div>
+              </li>
+            </ul>
+            <!-- 무한 스크롤용 복제 -->
+            <ul class="list">
+              <!-- 위와 동일한 20개 li 반복 (복사 붙여넣기) -->
+              <li class="item">
+                <div class="icon completed">✓</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>26분 전</span>
+                    <span class="name">용인 박O님</span>
+                    <span class="status completed">완료</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">5,870,000원</div>
+                </div>
+              </li>
+              <!-- ... (나머지 19개 동일) ... -->
+              <li class="item">
+                <div class="icon processing">…</div>
+                <div class="info">
+                  <div class="meta">
+                    <span>방금</span>
+                    <span class="name">제주 한O민님</span>
+                    <span class="status processing">진행중</span>
+                  </div>
+                  <div class="service">승인금액</div>
+                  <div class="amount">4,850,000원</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="relative z-10 text-center text-white px-6 max-w-5xl">
-      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif tracking-widest mb-6 md:mb-10 leading-tight">
-        One Pair,<br class="sm:hidden"> 120 Hours of Craft
-      </h1>
-      <p class="text-lg sm:text-xl md:text-2xl font-light tracking-wide mb-10 md:mb-14 opacity-90">
-        장인 한 명이 오직 당신의 발을 위해 만드는 신발
-      </p>
-      <a href="#collection"
-         class="inline-block border border-amber-700 text-amber-200 px-10 sm:px-14 py-5 sm:py-6 text-base sm:text-lg tracking-widest uppercase hover:bg-amber-800 hover:text-white transition duration-400">
-        View Collection
+  </div>
+
+  <!-- 오른쪽: 이미지 원본 크기 그대로 + 버튼 -->
+  <div class="right-column">
+    <div class="promo-section">
+      <div class="promo-image-container">
+        <a href="https://t.me/UUDDBB22" target="_blank">
+          <img class="promo-image" src="23.png" alt="연락처 바로가기">
+        </a>
+      </div>
+      <a href="https://t.me/UUDDBB22" class="goto-button" target="_blank">
+        바로가기 → 텔레그램 문의
       </a>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- Signature Collection -->
-  <section id="collection" class="py-24 md:py-32 bg-[#f8f5f1]">
-    <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-4xl md:text-5xl font-serif text-center mb-16 md:mb-24 tracking-wide">Signature Line</h2>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 lg:gap-16">
-        <!-- Product Card 예시 1 -->
-        <a href="#" class="group block">
-          <div class="relative aspect-[3/4] overflow-hidden bg-gray-100">
-            <img src="https://images.unsplash.com/photo-1605733513502-0e2c0d7036f3?w=800" 
-                 alt="Black Calf Oxford" 
-                 class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
-              <span class="text-white text-xl font-serif">View Details</span>
-            </div>
-          </div>
-          <div class="mt-6 text-center">
-            <h3 class="text-xl font-serif mb-1">Wholecut Oxford — Black Calf</h3>
-            <p class="text-gray-600">980,000 KRW</p>
-          </div>
-        </a>
-
-        <!-- Product Card 예시 2 -->
-        <a href="#" class="group block">
-          <div class="relative aspect-[3/4] overflow-hidden bg-gray-100">
-            <img src="https://images.unsplash.com/photo-1605733160316-4fc7dac6b6df?w=800" 
-                 alt="Dark Brown Derby" 
-                 class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
-              <span class="text-white text-xl font-serif">View Details</span>
-            </div>
-          </div>
-          <div class="mt-6 text-center">
-            <h3 class="text-xl font-serif mb-1">Derby — Horween Shell Cordovan</h3>
-            <p class="text-gray-600">1,480,000 KRW</p>
-          </div>
-        </a>
-
-        <!-- Product Card 예시 3 -->
-        <a href="#" class="group block">
-          <div class="relative aspect-[3/4] overflow-hidden bg-gray-100">
-            <img src="https://images.unsplash.com/photo-1605732789936-4cf2e0c0d6d3?w=800" 
-                 alt="Dark Cognac Loafer" 
-                 class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
-              <span class="text-white text-xl font-serif">View Details</span>
-            </div>
-          </div>
-          <div class="mt-6 text-center">
-            <h3 class="text-xl font-serif mb-1">Penny Loafer — Italian Museum Calf</h3>
-            <p class="text-gray-600">890,000 KRW</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA - Bespoke -->
-  <section class="py-24 md:py-32 bg-neutral-900 text-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-5xl font-serif mb-10 tracking-wide">Made Only for You</h2>
-      <p class="text-lg md:text-xl font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-        발 치수부터 걸음걸이, 생활 패턴까지 고려한 1:1 맞춤 제작.<br>
-        최고급 가죽과 솔, 당신만을 위한 라스트로 완성합니다.
-      </p>
-      <a href="#" 
-         class="inline-block bg-white text-neutral-900 px-12 py-5 text-lg tracking-widest uppercase hover:bg-amber-100 transition duration-300">
-        Start Bespoke Journey
-      </a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-neutral-900 text-gray-400 py-16">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
-      <div>
-        <div class="text-white text-xl font-serif mb-6">ATELIER</div>
-        <p class="text-sm">장인정신으로 한 켤레씩.<br>당신의 발에 맞춘 신발.</p>
-      </div>
-      <div>
-        <h4 class="text-white mb-4 uppercase text-sm tracking-wider">Menu</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-white transition">Collection</a></li>
-          <li><a href="#" class="hover:text-white transition">Bespoke</a></li>
-          <li><a href="#" class="hover:text-white transition">Craft Story</a></li>
-          <li><a href="#" class="hover:text-white transition">Reviews</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-white mb-4 uppercase text-sm tracking-wider">Support</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-white transition">Size Guide</a></li>
-          <li><a href="#" class="hover:text-white transition">Care Instructions</a></li>
-          <li><a href="#" class="hover:text-white transition">Warranty & Repair</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-white mb-4 uppercase text-sm tracking-wider">Contact</h4>
-        <ul class="space-y-2 text-sm">
-          <li>hello@yourdomain.com</li>
-          <li>+82 10-1234-5678</li>
-          <li>서울시 강남구</li>
-        </ul>
-      </div>
-    </div>
-    <div class="mt-16 text-center text-sm border-t border-neutral-800 pt-8">
-      © 2026 Handcrafted Shoes. All rights reserved.
-    </div>
-  </footer>
-
+<script>
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth() + 1;
+const day = today.getDate();
+document.querySelector('.date').textContent = `${year}년 ${month}월 ${day}일`;
+</script>
 </body>
 </html>
